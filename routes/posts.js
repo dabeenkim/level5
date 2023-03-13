@@ -11,7 +11,7 @@ router.get("/", postsController.getPosts);
 router.get("/:postId", postsController.getOnesPost);
 router.post("/", authMiddleware, postsController.createPost);
 router.put("/:postId", authMiddleware, postsController.putPost);
-router.delete("/:postId", authMiddleware, postsController.deletePost);
+router.delete("/:postId", authMiddleware, postsController.delPost);
 
 
 

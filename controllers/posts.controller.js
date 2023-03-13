@@ -52,16 +52,42 @@ class PostController {
         const { postId } = req.params;
         const { userId } = res.locals.user;
         const { title, content } = req.body;
+        // console.log(postId)
 
-        res.status(200).json({message: "게시글을 수정하였습니다." });
+        try{
+        const putpost = await this.PostService.updatePost({
+            postId,
+            userId,
+            title,
+            content,
+        });
+
+        res.status(200).json({
+            posts:putpost,
+            message: "게시글을 수정하였습니다." 
+        });
+    }catch(error) {
+        next(error);
+    }
     };
 
-    deletePost = async(req, res ,next) => {
+    delPost = async(req, res ,next) => {
         const { postId } = req.params;
         const { userId } = res.locals.user;
+        // console.log(userId)
 
-        res.statue(200).json({ Message: "게시글을 삭제하였습니다."})
+        const delpost = await this.PostService.deletePost(
+            postId,
+            userId,
+        )
+
+        res.status(200).json({ 
+            posts: delpost,
+            Message: "게시글을 삭제하였습니다."
+        })
+        
     }
+    
 }
 
 

@@ -1,4 +1,5 @@
 const {Posts, Users, Comments, Likes} = require("../models");
+const {Op} = require("sequelize");
 
 class PostRepository extends Posts {
     constructor() {
@@ -23,25 +24,35 @@ class PostRepository extends Posts {
         return posts;
     };
 
-    createPost = async({
-        UserId,
-        nickname,
-        title,
-        content,
-        createdAt,
-        updatedAt,
-    }) => {
-        const posts = await Posts.create({
-        UserId,
-        nickname,
-        title,
-        content,
-        createdAt,
-        updatedAt,
-        });
+    async getPostById(postId) {
+        return await Posts.findOne({ where: {postId:postId.postId}});
+    }
 
-        return posts;
-    };
+    async updatePost(postId, title, content) {
+        const [numRows, updatePost] = await Posts.update(
+            {title, content},
+            { where: {PostId: postId}, returning: true}
+        );
+
+        // console.log(numRows)
+        // if(numRows !== 1) {
+        //     throw new Error("게시글을 수정하지못했습니다.");
+        // };
+        //return updatePost[0];
+        return updatePost;
+    }
+
+    async deletePost(postId, userId) {
+        // console.log("postId=",postId, "userId=",userId);
+        const post = await PostRepository.destroy({
+          where: {
+            [Op.and]: [{ postId }, { userId }]
+          }
+        });
+        console.log(post);
+        return post;
+      }
+      
 }
 
 
