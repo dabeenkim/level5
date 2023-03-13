@@ -24,6 +24,28 @@ class PostRepository extends Posts {
         return posts;
     };
 
+    createPost = async({
+        UserId,
+        nickname,
+        title,
+        content,
+        createdAt,
+        updatedAt,
+    }) => {
+        const newPost = await Posts.create({
+            UserId,
+            nickname,
+            title,
+            content,
+            createdAt,
+            updatedAt,
+        });
+
+        return newPost;
+    }
+
+
+
     async getPostById(postId) {
         return await Posts.findOne({ where: {postId:postId.postId}});
     }

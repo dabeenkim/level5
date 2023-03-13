@@ -17,6 +17,29 @@ class PostService {
         return findAllPost;
     };
 
+    createPost = async({
+        UserId,
+        nickname,
+        title,
+        content,
+        createdAt,
+        updatedAt,
+    }) => {
+        const newPost =
+        await this.PostRepository.createPost({
+            UserId,
+            nickname,
+            title,
+            content,
+            createdAt,
+            updatedAt,
+        })
+
+        return newPost
+    }
+
+
+
     updatePost = async(postId, userId, title, content) => {
         // console.log("--------",postId)
         const post = await this.PostRepository.getPostById(postId);
