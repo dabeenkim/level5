@@ -34,7 +34,7 @@ class PostController {
         }
         const now = new Date();
         const posts = await this.PostService.createPost({
-            UserId:userId,
+            UserId:userId, 
             nickname,
             title,
             content,
