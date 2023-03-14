@@ -54,12 +54,13 @@ class LikeService {
 
     changeLike = async(postId, userId) => {
         
-        const isExistPost = await Posts.findByPk(postId);
-        if(!isExistPost) {
-            throw new Error("게시글이 존재하지 않습니다.")
-        }
-
+        const isExistPost = await this.LikeRepository.changeLike(
+            postId,
+            userId,
+        )
+        
         return isExistPost;
+       
     }
 }
 

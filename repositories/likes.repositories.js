@@ -15,6 +15,7 @@ class LikeRepository {
     };
   
     changeLike = async (postId, userId) => {
+      console.log(userId, postId)
         const post = await Posts.findByPk(postId);
         if (!post) {
           throw new Error("게시글이 존재하지 않습니다.");
@@ -25,19 +26,9 @@ class LikeRepository {
             PostId: postId,
             UserId: userId,
           },
+        
         });
-      
-        if (!isLike) {
-          await this.Likes.create({ PostId: postId, UserId: userId });
-          await Posts.increment("likeCount", { where: { id: postId } });
-          return "게시글 좋아요를 성공하였습니다.";
-        } else {
-          await this.Likes.destroy({
-            where: { PostId: postId, UserId: userId },
-          });
-          await Posts.decrement("likeCount", { where: { id: postId } });
-          return '게시글의 좋아요를 취소하였습니다.';
-        }
+         return isLike;
       };
 
 
