@@ -1,10 +1,12 @@
 const jwt = require("jsonwebtoken");
 const { Users } = require("../models");
-const { Comments } = require("../models")
 
 module.exports = async (req, res, next) => {
-  try {
+  // try {
     const { authorization } = req.cookies;
+    if (!authorization) {
+      return res.status(401).json({ message: "인증되지 않았습니다." });
+    }
     const [tokenType, token] = authorization.split(" ");
 
     if (tokenType !== "Bearer") {
@@ -21,14 +23,12 @@ module.exports = async (req, res, next) => {
     }
 
     res.locals.user = user;
-    // console.log(res.locals.user)
-    // console.log(res.locals.user)
 
     next();
-  } catch (error) {
-    res.clearCookie("authorization");
-    return res.status(401).json({
-      message: "비정상적인 요청입니다."
-    });
-  }
+  // } catch (error) {
+  //   res.clearCookie("authorization");
+  //   return res.status(401).json({
+  //     message: "비정상적인 요청입니다."
+  //   });
+  // }
 }

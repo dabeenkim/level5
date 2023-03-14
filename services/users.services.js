@@ -32,6 +32,7 @@ class UserService {
         const token = JWT.sign(
             {userId: user.userId}, "customized_secret_key"
         )
+        
         return token;
     }
 }

@@ -24,10 +24,12 @@ class UserController {
     loginUser = async (req, res, next) => {
     // try{
         const {nickname, password} = req.body;
+        console.log("============",nickname, password)
+     
+        const token = await this.UserService.tokenUser({nickname, password});
+        console.log(token)
 
-        const token = await this.UserService.tokenUser({nickname,password});
-
-        res.cookie("autorization", `Bearer ${token}`);
+        res.cookie("authorization", `Bearer ${token}`);
         res.status(200).json({token});
     // } catch(err) {
     //     console.error(err);

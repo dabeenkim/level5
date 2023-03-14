@@ -10,7 +10,7 @@ const usersController = new UserController();
 //회원가입 에러핸들링필요
 //중복시 에러가나온다.
 router.post("/signup", usersController.signupUser);
-router.post("/login", authMiddleware, usersController.loginUser);
+router.post("/login", usersController.loginUser);
 
 
 
