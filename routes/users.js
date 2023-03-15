@@ -1,19 +1,16 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const JWT = require("jsonwebtoken");
-const { Users} = require("../models")
+const JWT = require('jsonwebtoken');
+const { Users } = require('../models');
 
-const UserController = require("../controllers/users.controller");
-const authMiddleware = require("../middlewares/auth-middleware");
+const UserController = require('../controllers/users.controller');
+const authMiddleware = require('../middlewares/auth-middleware');
 const usersController = new UserController();
 
 //회원가입 에러핸들링필요
 //중복시 에러가나온다.
-router.post("/signup", usersController.signupUser);
-router.post("/login", usersController.loginUser);
-
-
-
+router.post('/signup', usersController.signupUser);
+router.post('/login', usersController.loginUser);
 
 // //회원가입 api
 // router.post("/signup", async (req, res) => {
@@ -42,15 +39,12 @@ router.post("/login", usersController.loginUser);
 //             res.status(412).json({ errorMessage: "중복된 닉네임입니다." });
 //             return;
 //         }
-    
 
 //         const user = new Users({ nickname, password });
 //         await user.save();
-        
-
 
 //         res.status(201).json({ message: "회원가입에 성공하였습니다." })
-//     } 
+//     }
 //     catch (error) {
 //         return res.status(400).json({ errorMessage: "요청한 데이터 형식이 올바르지 않습니다." })
 //     }}
@@ -78,6 +72,5 @@ router.post("/login", usersController.loginUser);
 //     res.status(200).json({ token });
 //   }catch(err) {return res.status(400).json({errorMessage: "로그인에 실패하였습니다." })}
 // });
-
 
 module.exports = router;

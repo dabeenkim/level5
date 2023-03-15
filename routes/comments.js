@@ -1,18 +1,23 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const {Comments} = require("../models");
-const authMiddleware = require("../middlewares/auth-middleware");
+const { Comments } = require('../models');
+const authMiddleware = require('../middlewares/auth-middleware');
 
-const CommentController = require("../controllers/comments.controller");
+const CommentController = require('../controllers/comments.controller');
 const commentController = new CommentController();
 
-router.get("/:postId/comments", authMiddleware, commentController.getComment);
-router.post("/:postId/comments", authMiddleware, commentController.postComment);
-router.put("/:postId/comments/:commentId", authMiddleware, commentController.putComment);
-router.delete("/:postId/comments/:commentId", authMiddleware, commentController.delComment);
-
-
-
+router.get('/:postId/comments', authMiddleware, commentController.getComment);
+router.post('/:postId/comments', authMiddleware, commentController.postComment);
+router.put(
+  '/:postId/comments/:commentId',
+  authMiddleware,
+  commentController.putComment
+);
+router.delete(
+  '/:postId/comments/:commentId',
+  authMiddleware,
+  commentController.delComment
+);
 
 //댓글조회 api
 // router.get("/:postId/comments", authMiddleware, async(req, res) => {
@@ -22,7 +27,6 @@ router.delete("/:postId/comments/:commentId", authMiddleware, commentController.
 //             attribute: ["commentsId", "userId", nickname, "comment", "createdAt", "updatedAt"],
 //             order: [["createdAt", "DESC"]]
 //         });
-
 
 //         res.status(200).json({comments: comments})
 //     }catch(err){res.status(400),json({error:"error"})}
@@ -42,7 +46,7 @@ router.delete("/:postId/comments/:commentId", authMiddleware, commentController.
 //             postId : postId,
 //             nickname,
 //             comment,
-//             createdAt : now, 
+//             createdAt : now,
 //             createdAt : now,
 //             updatedAt : now,
 //         })
@@ -56,7 +60,6 @@ router.delete("/:postId/comments/:commentId", authMiddleware, commentController.
 //     // }catch(err){"errorMessage": "error"}
 // })
 
-
 // //댓글수정 api
 // router.put("/:postId/comments/:commentId", authMiddleware, async(req, res) => {
 //     const {commentId} = req.params;
@@ -65,8 +68,8 @@ router.delete("/:postId/comments/:commentId", authMiddleware, commentController.
 //     const change_comments = await Comments.findOne({ where : {commentId}})
 
 //     change_comments.comment = comment;
-  
-//     await change_comments.save(); 
+
+//     await change_comments.save();
 
 //     res.status(200).json({Message: "댓글을 수정하였습니다."})
 
@@ -85,6 +88,5 @@ router.delete("/:postId/comments/:commentId", authMiddleware, commentController.
 //     res.status(200).json({Message : "댓글이 삭제되었습니다."});
 
 // })
-
 
 module.exports = router;

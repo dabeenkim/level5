@@ -1,38 +1,22 @@
-const {Users} = require("../models");
-
+const { Users } = require('../models');
 
 class UserRepository extends Users {
-    constructor() {
-        super();
-    }
+  constructor() {
+    super();
+  }
 
-    
-    signupUser = async({
-        nickname,
-        password,
-        confirm,
-    }) => {
-        const signup = new Users({ nickname, password});
-        await signup.save();
+  signupUser = async ({ nickname, password: hash }) => {
+    const signup = new Users({ nickname, password: hash });
+    await signup.save();
 
-        return signup;
-    } 
-    
+    return signup;
+  };
 
-    loginUser = async({
-        nickname,
-        password,
-    }) => {
-        const user = await Users.findOne({where: {nickname}});
+  loginUser = async ({ nickname }) => {
+    const user = await Users.findOne({ where: { nickname } });
 
-        if(!user || password !== user.password){
-            throw new Error("닉네임 또는 패스워드를 확인해주세요.")
-        }
-
-        return user;
-    }
-     
+    return user;
+  };
 }
-
 
 module.exports = UserRepository;

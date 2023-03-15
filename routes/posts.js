@@ -1,20 +1,17 @@
-const express = require("express");
-const { Op, DATE } = require("sequelize");
-const {Posts} = require("../models");
-const authMiddleware = require("../middlewares/auth-middleware");
+const express = require('express');
+const { Op, DATE } = require('sequelize');
+const { Posts } = require('../models');
+const authMiddleware = require('../middlewares/auth-middleware');
 const router = express.Router();
 
-const PostController = require("../controllers/posts.controller");
+const PostController = require('../controllers/posts.controller');
 const postsController = new PostController();
 
-router.get("/", postsController.getPosts);
-router.get("/:postId", postsController.getOnesPost);
-router.post("/", authMiddleware, postsController.createPost);
-router.put("/:postId", authMiddleware, postsController.putPost);
-router.delete("/:postId", authMiddleware, postsController.delPost);
-
-
-
+router.get('/', postsController.getPosts);
+router.get('/:postId', postsController.getOnesPost);
+router.post('/', authMiddleware, postsController.createPost);
+router.put('/:postId', authMiddleware, postsController.putPost);
+router.delete('/:postId', authMiddleware, postsController.delPost);
 
 //게시글 조회api
 // router.get("/", async (req, res) => {
@@ -28,8 +25,6 @@ router.delete("/:postId", authMiddleware, postsController.delPost);
 //  }catch(err){return res.status(400).json({errorMessage: "게시글 조회에 실패하였습니다."})}
 //  });
 
-
-
 // //게시글 상세조회api
 // router.get("/:postId", async (req, res) => {
 //   const { postId } = req.params;
@@ -37,7 +32,7 @@ router.delete("/:postId", authMiddleware, postsController.delPost);
 //     attributes: ["postId", "UserId", "title", "content", "createdAt", "updatedAt"],
 //     where: { postId },
 //   });
-  
+
 //   return res.status(200).json({ post: post });
 // });
 
@@ -53,14 +48,12 @@ router.delete("/:postId", authMiddleware, postsController.delPost);
 //     nickname,
 //     title,
 //     content,
-//     createdAt: now , 
+//     createdAt: now ,
 //     updatedAt: now
 //   });
 
 //   return res.status(201).json({ data: post });
 // });
-
-
 
 // // 게시글 수정
 // router.put("/:postId", authMiddleware, async (req, res) => {
@@ -89,8 +82,6 @@ router.delete("/:postId", authMiddleware, postsController.delPost);
 
 //   return res.status(200).json({ data: "게시글이 수정되었습니다." });
 // });
-
-
 
 // // 게시글 삭제
 // router.delete("/:postId", authMiddleware, async (req, res) => {

@@ -24,7 +24,7 @@ class LikeController {
     changeLike = async(req, res, next) => {
         const {postId} = req.params;
         const {userId} = res.locals.user;
-    // try{
+    try{
         const isLike = await this.LikeService.changeLike(postId, userId);
 
         if (!isLike) {
@@ -34,12 +34,12 @@ class LikeController {
               await Likes.destroy({where: { PostId: postId, UserId: userId }});
               return res.status(200).json({ message: '게시글의 좋아요를 취소하였습니다.' });
             }
-    // }catch(error) {
-    //     console.error(`${req.method} ${req.originalUrl} : ${error.message}`);
-    //     return res.status(400).json({
-    //     errorMessage: '게시글 좋아요에 실패하였습니다.',
-    // });
-    // }
+    }catch(error) {
+        console.error(`${req.method} ${req.originalUrl} : ${error.message}`);
+        return res.status(400).json({
+        errorMessage: '게시글 좋아요에 실패하였습니다.',
+    });
+    }
 }
 }
 

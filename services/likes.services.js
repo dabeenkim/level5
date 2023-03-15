@@ -1,67 +1,61 @@
-const LikeRepository = require("../repositories/likes.repositories");
-const { Posts, Users, Likes } = require("../models");
-const { sequelize } = require("../models");
-const {Op} = require("sequelize");
+const LikeRepository = require('../repositories/likes.repositories');
+const { Posts, Users, Likes } = require('../models');
+const { sequelize } = require('../models');
+const { Op } = require('sequelize');
 
 class LikeService {
-    constructor() {
-        this.LikeRepository = new LikeRepository();
-    }
+  constructor() {
+    this.LikeRepository = new LikeRepository();
+  }
 
-    async getLike(userId) {
-        const likedPostIds = await this.LikeRepository.findByUserId(userId);
+  async getLike(userId) {
+    const likedPostIds = await this.LikeRepository.findByUserId(userId);
 
-        const parseLikePostsModel = (likes) => {
-            return likes.map((like) => {
-                let obj = {};
+    const parseLikePostsModel = (likes) => {
+      return likes.map((like) => {
+        let obj = {};
 
-                for (const [k ,v] of Object.entries(like)) {
-                    if(k.split(".").length > 1) {
-                        const key = k.split(".")[1];
-                        obj[key] = v;
-                    }else obj[k] = v;
-                }
-                return obj;
-            });
-        };
+        for (const [k, v] of Object.entries(like)) {
+          if (k.split('.').length > 1) {
+            const key = k.split('.')[1];
+            obj[key] = v;
+          } else obj[k] = v;
+        }
+        return obj;
+      });
+    };
 
-        const posts = await Posts.findAll({
-            attributes: [
-                "postId",
-                "userId",
-                "title",
-                "createdAt",
-                "updatedAt",
-                [sequelize.fn("COUNT", sequelize.col("Likes.PostId")), "likes"],
-            ],
-            include: [
-                {
-                    model: Likes,
-                    attributes: [],
-                    required: true,
-                    where: { [Op.and]: [{UserId: userId}]},
-                },
-            ],
-            where: {postId: likedPostIds},
-            group: ["Posts.postId"],
-            order: [["createdAt", "DESC"]],
-            raw: true,
-        }).then((likes) => parseLikePostsModel(likes));
+    const posts = await Posts.findAll({
+      attributes: [
+        'postId',
+        'userId',
+        'title',
+        'createdAt',
+        'updatedAt',
+        [sequelize.fn('COUNT', sequelize.col('Likes.PostId')), 'likes'],
+      ],
+      include: [
+        {
+          model: Likes,
+          attributes: [],
+          required: true,
+          where: { [Op.and]: [{ UserId: userId }] },
+        },
+      ],
+      where: { postId: likedPostIds },
+      group: ['Posts.postId'],
+      order: [['createdAt', 'DESC']],
+      raw: true,
+    }).then((likes) => parseLikePostsModel(likes));
 
-        return posts;
-    }
+    return posts;
+  }
 
+  changeLike = async (postId, userId) => {
+    const isExistPost = await this.LikeRepository.changeLike(postId, userId);
 
-    changeLike = async(postId, userId) => {
-        
-        const isExistPost = await this.LikeRepository.changeLike(
-            postId,
-            userId,
-        )
-        
-        return isExistPost;
-       
-    }
+    return isExistPost;
+  };
 }
 
 module.exports = LikeService;
