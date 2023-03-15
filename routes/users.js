@@ -18,7 +18,7 @@ router.post('/login', usersController.loginUser);
 //         const { nickname, password, confirmpassword } = req.body;
 
 //         const nicknameRegax = /^[a-zA-Z0-9]{3,}$/;
-//         if (!nicknameRegax.test(nickname)) {
+//         if (!nicknameRegax.test(nickname )) {
 //             return res.status(412).json({ error: "닉네임의 형식이 일치하지 않습니다." })
 //         }
 //         const passwordRegax = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}$/;
