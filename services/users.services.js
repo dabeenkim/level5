@@ -9,7 +9,6 @@ class UserService {
   }
 
   signupUser = async ({ nickname, password, confirm }) => {
-    console.log(nickname, password, confirm);
     if (password !== confirm) {
       throw new Error('비밀번호가 다릅니다.');
     }
@@ -24,8 +23,11 @@ class UserService {
 
   tokenUser = async ({ nickname, password }) => {
     const user = await this.UserRepository.loginUser({ nickname });
+
     const token = JWT.sign({ userId: user.userId }, 'env.SECRET_KEY');
+
     const check_password = await bcrypt.compare(password, user.password);
+
     return { token, check_password };
   };
 }

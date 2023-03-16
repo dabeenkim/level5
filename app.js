@@ -7,27 +7,30 @@ const commentsRouter = require('./routes/comments.js');
 const likesRouter = require('./routes/likes.js');
 
 const app = express();
+//logger값을 받아와서 아래에 app.listen에서 사용한다.
+const logger = require('./src/config/logger');
 const PORT = 3016;
 
-const accessLogStream = require('./src/config/log');
+//모르간사용
+// const accessLogStream = require('./src/config/log');
 
 //앱세팅
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(
-  //출력포맷을 정해줄 수 있다.
-  //npm홈페이지에서 morgan검색하면 여러가지가잇다.
-  //저장하고싶은 메소드만도 사용가능 예) :method
-  morgan('common', { stream: accessLogStream })
-);
-app.use(morgan('dev'));
+// app.use(
+//   //출력포맷을 정해줄 수 있다.
+//   //npm홈페이지에서 morgan검색하면 여러가지가잇다.
+//   //저장하고싶은 메소드만도 사용가능 예) :method
+//   morgan('common', { stream: accessLogStream })
+// );
+// app.use(morgan('dev'));
 app.use('/', usersRouter);
 app.use('/posts', [postsRouter, commentsRouter]);
 app.use('/like', likesRouter);
 
 app.listen(PORT, () => {
-  console.log(PORT, '포트 번호로 서버가 실행되었습니다.');
+  logger.info(`${PORT} 포트 번호로 서버가 실행되었습니다.`);
 });
 
 // const crypto = require('crypto');
