@@ -6,7 +6,7 @@ module.exports = async (req, res, next) => {
     if (!authorization) {
       return res.status(401).json({ message: '인증되지 않았습니다.' });
     }
-    const [tokenType, token] = authorization.split(' ');
+    const [tokenType, token] = (authorization ?? '').split(' ');
 
     if (tokenType !== 'Bearer') {
       return res

@@ -5,8 +5,8 @@ class PostService {
     this.PostRepository = new PostRepository();
   }
 
-  getPosts = async ({}) => {
-    const findAllPost = await this.PostRepository.getPosts({});
+  getPosts = async () => {
+    const findAllPost = await this.PostRepository.getPosts();
 
     return findAllPost;
   };

@@ -13,7 +13,7 @@ class PostRepository extends Posts {
         'UserId',
         'nickname',
         'title',
-        'createdAt',
+        'createdAt',  
         'updatedAt',
       ],
       order: [['createdAt', 'DESC']],
